@@ -39,14 +39,28 @@
     (yank)
     (move-to-column saved-column)))
 
-(defun tomi-delete-line()
+(defun tomi-last-line-check()
   (interactive)
   (let ((saved-column (current-column)))
-    (move-beginning-of-line nil)
-    (set-mark-command nil)
-    (next-line)
-    (delete-region (mark) (point))
-    (move-to-column saved-column)))
+    (move-end-of-line nil)
+    (setq result (eobp))
+    (move-to-column saved-column)
+    result))
+
+(defun tomi-delete-line()
+  (interactive)
+  (if (tomi-last-line-check)
+      (progn
+	(move-beginning-of-line nil)
+	(move-end-of-line)
+	(delete-region (mark) (point)))
+    (progn
+      (let ((saved-column (current-column)))
+	(move-beginning-of-line nil)
+	(set-mark-command nil)
+	(next-line)
+	(delete-region (mark) (point))
+	(move-to-column saved-column)))))
 
 ;; Default configuration
 
