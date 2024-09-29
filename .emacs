@@ -52,7 +52,7 @@
   (if (tomi-last-line-check)
       (progn
 	(move-beginning-of-line nil)
-	(move-end-of-line)
+	(move-end-of-line nil)
 	(delete-region (mark) (point)))
     (progn
       (let ((saved-column (current-column)))
