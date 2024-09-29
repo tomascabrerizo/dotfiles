@@ -34,9 +34,18 @@
     (move-beginning-of-line nil)
     (set-mark-command nil)
     (move-end-of-line nil)
-    (kill-ring-save 0 0 t)
+    (kill-ring-save (mark) (point))
     (newline)
     (yank)
+    (move-to-column saved-column)))
+
+(defun tomi-delete-line()
+  (interactive)
+  (let ((saved-column (current-column)))
+    (move-beginning-of-line nil)
+    (set-mark-command nil)
+    (next-line)
+    (delete-region (mark) (point))
     (move-to-column saved-column)))
 
 ;; Default configuration
@@ -94,10 +103,12 @@
   (define-key company-active-map (kbd "TAB") #'company-complete-selection)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection))
 
-
 ;; Custom keybinding
 
 (global-set-key (kbd "M-,") 'tomi-duplicate-line)
+(global-set-key (kbd "C-d") 'tomi-delete-line)
+(global-set-key (kbd "M-<home>") 'back-to-indentation)
+(global-set-key (kbd "M-<end>") 'move-end-of-line)
 
 (global-set-key (kbd "C-x C-<right>") 'tomi-switch-to-next-buffer)
 (global-set-key (kbd "C-x C-<left>") 'tomi-switch-to-prev-buffer)
