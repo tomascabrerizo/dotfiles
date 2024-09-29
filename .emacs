@@ -28,6 +28,17 @@
          (not ( equal bread-crumb (buffer-name) )) )
       (previous-buffer))))
 
+(defun tomi-duplicate-line ()
+  (interactive)
+  (let ((saved-column (current-column)))
+    (move-beginning-of-line nil)
+    (set-mark-command nil)
+    (move-end-of-line nil)
+    (kill-ring-save 0 0 t)
+    (newline)
+    (yank)
+    (move-to-column saved-column)))
+
 ;; Default configuration
 
 (setq inhibit-startup-screen t)
@@ -85,6 +96,8 @@
 
 
 ;; Custom keybinding
+
+(global-set-key (kbd "M-,") 'tomi-duplicate-line)
 
 (global-set-key (kbd "C-x C-<right>") 'tomi-switch-to-next-buffer)
 (global-set-key (kbd "C-x C-<left>") 'tomi-switch-to-prev-buffer)
