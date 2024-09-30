@@ -2,6 +2,10 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; Custom Theme
+(load-file "./.emacs.themes/tomi-theme.el")
+(load-theme 'tomi t)
+
 ;; Custom functions
 
 (defun tomi-require(package)
@@ -69,6 +73,7 @@
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(global-display-line-numbers-mode 1)
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
@@ -79,13 +84,13 @@
 ;; Custom packages configuration
 
 (tomi-require 'zenburn-theme)
+(tomi-require 'tao-theme)
+(tomi-require 'nord-theme)
 (tomi-require 'typescript-mode)
 (tomi-require 'json-mode)
 (tomi-require 'undo-fu)
 (tomi-require 'company)
 (tomi-require 'lsp-mode)
-
-(load-theme 'zenburn t)
 
 (add-hook 'typescript-mode-hook
           (lambda ()
@@ -141,9 +146,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("09b833239444ac3230f591e35e3c28a4d78f1556b107bafe0eb32b5977204d93" default))
+   '("98b4ef49c451350c28a8c20c35c4d2def5d0b8e5abbc962da498c423598a1cdd" "09b833239444ac3230f591e35e3c28a4d78f1556b107bafe0eb32b5977204d93" default))
  '(package-selected-packages
-   '(lsp-mode company undo-fu json-mode typescript-mode zenburn-theme)))
+   '(nord-theme tao-theme lsp-mode company undo-fu json-mode typescript-mode zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
