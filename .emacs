@@ -67,6 +67,7 @@
 
 ;; Default configuration
 
+(setq compilation-always-kill t)
 (setq inhibit-startup-screen t)
 (setq make-backup-files nil)
 (setq-default truncate-lines t)
@@ -77,7 +78,7 @@
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
-(set-frame-font "Liberation Mono-12" nil t)
+(set-frame-font "Liberation Mono-14" nil t)
 (delete-selection-mode 1)
 (fido-mode 1)
 
@@ -88,11 +89,19 @@
 (tomi-require 'idea-darkula-theme)
 (tomi-require 'typescript-mode)
 (tomi-require 'json-mode)
+(tomi-require 'go-mode)
 (tomi-require 'undo-fu)
 (tomi-require 'company)
 (tomi-require 'lsp-mode)
 
 (load-theme 'idea-darkula t)
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (company-mode)
+	    (lsp-deferred)
+            (setq tab-width 4)
+            (setq indent-tabs-mode nil)))
 
 (add-hook 'typescript-mode-hook
           (lambda ()
@@ -114,6 +123,7 @@
 (setq lsp-modeline-code-actions-enable nil)
 (setq lsp-headerline-breadcrumb-enable nil)
 (setq lsp-clients-typescript-prefer-use-project-ts-server t)
+(setq lsp-enable-links nil)
 
 (setq lsp-typescript-format-enable nil)
 
@@ -149,8 +159,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("5b675cfde4cb4c95edabd41ab49c50e42b9efe4b8a495d8736d808c23117ff05" default))
  '(package-selected-packages
-   '(idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme)))
+   '(go-mode idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme))
+ '(warning-suppress-types '((lsp-mode) (lsp-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
