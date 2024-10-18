@@ -67,6 +67,7 @@
 
 ;; Default configuration
 
+(setq indent-tabs-mode nil)
 (setq compilation-always-kill t)
 (setq inhibit-startup-screen t)
 (setq make-backup-files nil)
@@ -89,6 +90,7 @@
 (tomi-require 'idea-darkula-theme)
 (tomi-require 'typescript-mode)
 (tomi-require 'json-mode)
+(tomi-require 'web-mode)
 (tomi-require 'go-mode)
 (tomi-require 'undo-fu)
 (tomi-require 'company)
@@ -101,7 +103,8 @@
 	    (company-mode)
 	    (lsp-deferred)
             (setq tab-width 4)
-            (setq indent-tabs-mode nil)))
+            (setq indent-tabs-mode nil)
+	    (add-hook 'before-save-hook 'gofmt-before-save nil t)))
 
 (add-hook 'typescript-mode-hook
           (lambda ()
@@ -113,6 +116,16 @@
 	  (lambda ()
 	    (company-mode)
 	    (setq tab-width 2)))
+
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-hook 'web-mode-hook
+	  (lambda ()
+	    (company-mode)
+	    (setq tab-width 2)
+	    (setq indent-tabs-mode nil)
+	    (setq web-mode-markup-indent-offset 2)
+	    (setq web-mode-css-indent-offset 2)
+	    (setq web-mode-code-indent-offset 2)))
 
 (add-hook 'css-mode-hook
 	  (lambda ()
@@ -162,7 +175,7 @@
  '(custom-safe-themes
    '("5b675cfde4cb4c95edabd41ab49c50e42b9efe4b8a495d8736d808c23117ff05" default))
  '(package-selected-packages
-   '(go-mode idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme))
+   '(web-mode go-mode idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme))
  '(warning-suppress-types '((lsp-mode) (lsp-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
