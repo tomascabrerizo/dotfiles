@@ -3,7 +3,7 @@
 (package-initialize)
 
 ;; Load Custom Theme
-(load-file "./.emacs.themes/tomi-theme.el")
+(load-file "~/.emacs.themes/tomi-theme.el")
 
 ;; Custom functions
 
@@ -83,7 +83,7 @@
 (delete-selection-mode 1)
 (fido-mode 1)
 
-;; Custom packages configuration
+;; Custom packages instalation
 
 (tomi-require 'zenburn-theme)
 (tomi-require 'nord-theme)
@@ -92,11 +92,39 @@
 (tomi-require 'json-mode)
 (tomi-require 'web-mode)
 (tomi-require 'go-mode)
+(tomi-require 'lua-mode)
 (tomi-require 'undo-fu)
 (tomi-require 'company)
 (tomi-require 'lsp-mode)
+(tomi-require 'cmake-mode)
+;; (tomi-require 'projectile)
+
+;; Custom packages configuration
 
 (load-theme 'idea-darkula t)
+
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
+(add-hook 'c-mode-hook
+          (lambda ()
+            (lsp)
+            (setq tab-width 4)
+            (setq indent-tabs-mode nil)))
+
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (lsp)
+            (setq tab-width 4)
+            (setq indent-tabs-mode nil)))
+
+
+(add-hook 'lua-mode-hook
+	  (lambda ()
+	    (company-mode)
+	    (lsp-deferred)
+            (setq tab-width 4)
+            (setq indent-tabs-mode nil)
+            (setq lsp-lua-workspace-library (ht ("~/Programming/Vanilla-WoW-Lua-Definitions"  t)))))
 
 (add-hook 'go-mode-hook
 	  (lambda ()
@@ -147,6 +175,9 @@
   (define-key company-active-map (kbd "TAB") #'company-complete-selection)
   (define-key company-active-map (kbd "<tab>") #'company-complete-selection))
 
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 ;; Custom keybinding
 
 (global-set-key (kbd "C-,") 'tomi-duplicate-line)
@@ -167,6 +198,9 @@
 (global-set-key (kbd "M-N") 'flymake-goto-next-error)
 (global-set-key (kbd "M-P") 'flymake-goto-prev-error)
 
+(global-set-key (kbd "M-/") 'project-compile)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -175,7 +209,7 @@
  '(custom-safe-themes
    '("5b675cfde4cb4c95edabd41ab49c50e42b9efe4b8a495d8736d808c23117ff05" default))
  '(package-selected-packages
-   '(web-mode go-mode idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme))
+   '(projectile cmake-mode lua-mode web-mode go-mode idea-darkula-theme idea-drakula-theme lsp-mode company undo-fu json-mode typescript-mode nord-theme zenburn-theme))
  '(warning-suppress-types '((lsp-mode) (lsp-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
